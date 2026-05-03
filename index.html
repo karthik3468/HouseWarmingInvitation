@@ -143,6 +143,22 @@
       }
     }
 
+    /* ── MUSIC TOGGLE BUTTON ── */
+    #musicToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 10px 18px;
+      border-radius: 50px;
+      background: var(--saffron);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
     /* ── WRAPPER ── */
     .wrapper {
       position: relative;
@@ -1159,7 +1175,9 @@
       </div>
     </section>
 
-    <audio id="apAudio" preload="auto" loop autoplay>
+    <button id="musicToggle" aria-label="Toggle background music playback">🎵 Play Music</button>
+
+    <audio id="apAudio" preload="auto" loop>
       <source src="Inkem Inkem Inkem Kaavaale Flute Siva Geetha Govindam - flutesiva (128k).mp3" type="audio/mpeg">
     </audio>
 
@@ -1378,12 +1396,22 @@
       setInterval(tick, 1000);
     })();
 
-    /* ── AUTOPLAY MUSIC ── */
+    /* ── MUSIC TOGGLE ── */
     (function () {
       const audio = document.getElementById('apAudio');
+      const musicBtn = document.getElementById('musicToggle');
       audio.volume = 0.75;
-      audio.muted = false;
-      audio.play().catch(function () { /* ignore */ });
+      musicBtn.addEventListener('click', function () {
+        if (audio.paused) {
+          audio.play();
+          musicBtn.textContent = '⏸️ Pause Music';
+          musicBtn.setAttribute('aria-label', 'Pause background music');
+        } else {
+          audio.pause();
+          musicBtn.textContent = '🎵 Play Music';
+          musicBtn.setAttribute('aria-label', 'Play background music');
+        }
+      });
     })();
   </script>
 </body>
