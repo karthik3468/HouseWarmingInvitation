@@ -43,6 +43,155 @@
       min-height: 100vh;
     }
 
+    body.is-locked {
+      overflow: hidden;
+    }
+
+    /* ── INTRO OVERLAY ── */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 30%, rgba(128, 0, 32, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(255, 107, 0, 0.15) 0%, transparent 50%),
+        linear-gradient(180deg, #0d0003 0%, #1a0005 40%, #0d0003 100%);
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .intro-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-overlay__frame {
+      position: absolute;
+      width: min(550px, calc(100% - 48px));
+      height: min(550px, calc(100% - 48px));
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 12px;
+      box-shadow:
+        inset 0 0 0 12px rgba(255, 215, 0, 0.03),
+        inset 0 0 0 24px rgba(255, 215, 0, 0.02);
+      animation: introFrameGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes introFrameGlow {
+      from { box-shadow: inset 0 0 0 12px rgba(255, 215, 0, 0.03), 0 0 40px rgba(255, 180, 0, 0.08); }
+      to { box-shadow: inset 0 0 0 12px rgba(255, 215, 0, 0.06), 0 0 80px rgba(255, 180, 0, 0.2); }
+    }
+
+    .intro-overlay__content {
+      position: relative;
+      z-index: 1;
+      width: min(480px, 100%);
+      padding: 44px 28px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 16px;
+      text-align: center;
+      background: linear-gradient(145deg, rgba(26, 0, 5, 0.85), rgba(80, 10, 20, 0.4));
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .intro-overlay__om {
+      font-size: 3.5rem;
+      color: var(--gold);
+      text-shadow: 0 0 20px var(--gold), 0 0 50px var(--amber);
+      animation: omGlow 3s ease-in-out infinite alternate;
+      display: block;
+      margin-bottom: 16px;
+      font-family: 'Noto Sans Telugu', sans-serif;
+    }
+
+    .intro-overlay h1 {
+      font-family: 'Noto Sans Telugu', sans-serif;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--amber) 40%, var(--saffron) 70%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: shimmer 3s linear infinite;
+      margin: 0 0 8px;
+      filter: drop-shadow(0 0 12px rgba(255, 180, 0, 0.4));
+    }
+
+    .intro-overlay__subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.75rem, 2vw, 0.95rem);
+      letter-spacing: 0.2em;
+      color: var(--amber);
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin: 0 0 28px;
+    }
+
+    .intro-overlay__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 36px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #1a0005;
+      background: linear-gradient(135deg, #c47a2a, #FFD700 46%, #D4A017);
+      box-shadow: 0 16px 40px rgba(255, 180, 0, 0.35), 0 0 60px rgba(255, 215, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: btnPulse 2s ease-in-out infinite;
+    }
+
+    .intro-overlay__btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 20px 50px rgba(255, 180, 0, 0.5), 0 0 80px rgba(255, 215, 0, 0.25);
+    }
+
+    .intro-overlay__btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    @keyframes btnPulse {
+      0%, 100% { box-shadow: 0 16px 40px rgba(255, 180, 0, 0.35), 0 0 60px rgba(255, 215, 0, 0.15); }
+      50% { box-shadow: 0 16px 50px rgba(255, 180, 0, 0.55), 0 0 80px rgba(255, 215, 0, 0.3); }
+    }
+
+    .intro-overlay__note {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: rgba(255, 215, 0, 0.5);
+      margin: 18px 0 0;
+    }
+
+    /* Intro floating diyas */
+    .intro-overlay__diyas {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 0 0;
+    }
+
+    .intro-overlay__diyas .diya {
+      transform: scale(0.85);
+      animation: floatUp 2.5s ease-in-out infinite alternate;
+    }
+
+    .intro-overlay__diyas .diya:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
     /* ── ANIMATED BACKGROUND ── */
     .bg-layer {
       position: fixed;
@@ -141,22 +290,6 @@
         transform: translateY(110vh) rotate(360deg) translateX(-20px);
         opacity: 0;
       }
-    }
-
-    /* ── MUSIC TOGGLE BUTTON ── */
-    #musicToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      padding: 10px 18px;
-      border-radius: 50px;
-      background: var(--saffron);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
     /* ── WRAPPER ── */
@@ -919,6 +1052,78 @@
       font-size: 1.1rem;
     }
 
+    /* ── FLOATING MUTE BUTTON ── */
+    .mute-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 215, 0, 0.5);
+      background: linear-gradient(135deg, rgba(128, 0, 32, 0.9), rgba(60, 0, 15, 0.95));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(255, 107, 0, 0.35), 0 0 40px rgba(255, 180, 0, 0.15);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      animation: muteGlow 2.5s ease-in-out infinite alternate;
+    }
+
+    .mute-btn:hover {
+      transform: scale(1.12);
+      box-shadow: 0 6px 32px rgba(255, 107, 0, 0.5), 0 0 60px rgba(255, 180, 0, 0.25);
+    }
+
+    .mute-btn:active {
+      transform: scale(0.95);
+    }
+
+    .mute-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--gold);
+      transition: fill 0.2s ease;
+    }
+
+    .mute-btn.muted {
+      border-color: rgba(255, 215, 0, 0.25);
+      animation: none;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .mute-btn.muted svg {
+      fill: rgba(255, 215, 0, 0.4);
+    }
+
+    @keyframes muteGlow {
+      from {
+        box-shadow: 0 4px 24px rgba(255, 107, 0, 0.35), 0 0 40px rgba(255, 180, 0, 0.15);
+      }
+      to {
+        box-shadow: 0 4px 32px rgba(255, 107, 0, 0.55), 0 0 60px rgba(255, 180, 0, 0.3);
+      }
+    }
+
+    /* Pulse ring on muted state to hint user */
+    .mute-btn.muted::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 215, 0, 0.3);
+      animation: pulseRing 2s ease-out infinite;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
     /* ── RESPONSIVE TWEAKS ── */
     @media (max-width: 480px) {
       .hero {
@@ -948,7 +1153,33 @@
   </style>
 </head>
 
-<body>
+<body class="is-locked">
+
+  <!-- ── INTRO OVERLAY ── -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-overlay__frame"></div>
+    <div class="intro-overlay__content">
+      <span class="intro-overlay__om">ॐ</span>
+      <h1>గృహ ప్రవేశం</h1>
+      <p class="intro-overlay__subtitle">Housewarming Invitation</p>
+      <button class="intro-overlay__btn" id="openInvitationBtn" type="button">
+        🪷 Open Invitation
+      </button>
+      <p class="intro-overlay__note">Tap to begin the celebration</p>
+      <div class="intro-overlay__diyas">
+        <div class="diya">
+          <div class="flame"><div class="flame-outer"></div><div class="flame-inner"></div></div>
+          <div class="diya-wick"></div>
+          <div class="diya-body"><div class="diya-glow"></div></div>
+        </div>
+        <div class="diya">
+          <div class="flame"><div class="flame-outer"></div><div class="flame-inner"></div></div>
+          <div class="diya-wick"></div>
+          <div class="diya-body"><div class="diya-glow"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="bg-layer"></div>
   <div class="kolam-bg"></div>
@@ -1175,10 +1406,15 @@
       </div>
     </section>
 
-    <button id="musicToggle" aria-label="Toggle background music playback">🎵 Play Music</button>
+    <!-- FLOATING MUTE BUTTON -->
+    <button class="mute-btn" id="muteBtn" title="Tap to mute 🔇">
+      <svg viewBox="0 0 24 24" id="muteIcon">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+    </button>
 
     <audio id="apAudio" preload="auto" loop>
-      <source src="Inkem Inkem Inkem Kaavaale Flute Siva Geetha Govindam - flutesiva (128k).mp3" type="audio/mpeg">
+      <source src="inkem.mp3" type="audio/mpeg">
     </audio>
 
     <!-- LOCATION -->
@@ -1396,48 +1632,117 @@
       setInterval(tick, 1000);
     })();
 
-    /* ── MUSIC TOGGLE ── */
+    /* ── OPEN INVITATION + MUSIC ── */
     (function () {
+      const introOverlay = document.getElementById('introOverlay');
+      const openBtn = document.getElementById('openInvitationBtn');
       const audio = document.getElementById('apAudio');
-      const musicBtn = document.getElementById('musicToggle');
+      const muteBtn = document.getElementById('muteBtn');
+      const muteIcon = document.getElementById('muteIcon');
+
+      const iconUnmuted = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+      const iconMuted = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+
       audio.volume = 0.75;
+      let musicStarted = false;
 
-      function updateMusicBtn(playing) {
-        musicBtn.textContent = playing ? '⏸️ Pause Music' : '🎵 Play Music';
-        musicBtn.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
-      }
+      // Do NOT autoplay — wait for "Open Invitation" click
+      muteBtn.style.display = 'none'; // hide mute button until invitation is opened
 
-      /* Start music on the very first user interaction (click or tap).
-         Skip if the interaction is on the music toggle button — that button's
-         own handler already starts/pauses the track. */
-      let autoplayAttempted = false;
-      function startOnFirstInteraction(e) {
-        if (musicBtn.contains(e.target)) { return; }
-        if (autoplayAttempted) { return; }
-        autoplayAttempted = true;
+      function startMusic() {
+        if (musicStarted) return;
+        musicStarted = true;
+        audio.muted = false;
         audio.play().then(function () {
-          updateMusicBtn(true);
-          /* Listeners removed on success; flag stays true but is no longer checked */
-          document.removeEventListener('click', startOnFirstInteraction);
-          document.removeEventListener('touchstart', startOnFirstInteraction);
+          muteBtn.style.display = 'flex';
+          muteBtn.classList.remove('muted');
+          muteBtn.title = 'Tap to mute 🔇';
+          muteIcon.innerHTML = iconUnmuted;
         }).catch(function () {
-          /* Autoplay was blocked; reset flag so the next interaction can retry */
-          autoplayAttempted = false;
+          // If browser still blocks, show muted state
+          audio.muted = true;
+          audio.play().catch(function () { /* ignore */ });
+          muteBtn.style.display = 'flex';
+          muteBtn.classList.add('muted');
+          muteBtn.title = 'Tap to unmute 🔊';
+          muteIcon.innerHTML = iconMuted;
         });
       }
-      document.addEventListener('click', startOnFirstInteraction);
-      document.addEventListener('touchstart', startOnFirstInteraction, { passive: true });
 
-      musicBtn.addEventListener('click', function () {
-        if (audio.paused) {
-          audio.play();
-          updateMusicBtn(true);
+      // Open Invitation button click
+      openBtn.addEventListener('click', function () {
+        // Hide intro overlay
+        introOverlay.classList.add('is-hidden');
+        // Unlock scroll
+        document.body.classList.remove('is-locked');
+        // Start music
+        startMusic();
+        // Re-launch confetti for celebration effect
+        launchConfettiAgain();
+      });
+
+      // Mute/Unmute toggle
+      muteBtn.addEventListener('click', function () {
+        if (audio.muted) {
+          audio.muted = false;
+          audio.play().catch(function () { /* ignore */ });
+          muteBtn.classList.remove('muted');
+          muteBtn.title = 'Tap to mute 🔇';
+          muteIcon.innerHTML = iconUnmuted;
         } else {
-          audio.pause();
-          updateMusicBtn(false);
+          audio.muted = true;
+          muteBtn.classList.add('muted');
+          muteBtn.title = 'Tap to unmute 🔊';
+          muteIcon.innerHTML = iconMuted;
         }
       });
     })();
+
+    /* ── RE-LAUNCH CONFETTI ON OPEN ── */
+    function launchConfettiAgain() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colours = ['#FF6B00', '#FFD700', '#DC143C', '#FFBF00', '#FF4500', '#FFF0A0', '#800020'];
+      const particles = [];
+      for (let i = 0; i < 200; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          w: 6 + Math.random() * 8, h: 4 + Math.random() * 4,
+          color: colours[Math.floor(Math.random() * colours.length)],
+          rot: Math.random() * 360,
+          vy: 2 + Math.random() * 4, vx: (Math.random() - 0.5) * 2,
+          vr: (Math.random() - 0.5) * 6,
+          alpha: 1
+        });
+      }
+
+      let frame = 0;
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        particles.forEach(function (p) {
+          if (p.alpha <= 0) return;
+          alive = true;
+          p.y += p.vy; p.x += p.vx; p.rot += p.vr;
+          if (p.y > canvas.height * 0.6) p.alpha -= 0.012;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot * Math.PI / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        frame++;
+        if (alive && frame < 300) requestAnimationFrame(draw);
+        else { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+      }
+      draw();
+    }
   </script>
 </body>
 
