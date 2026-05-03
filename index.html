@@ -1401,15 +1401,40 @@
       const audio = document.getElementById('apAudio');
       const musicBtn = document.getElementById('musicToggle');
       audio.volume = 0.75;
+
+      function updateMusicBtn(playing) {
+        musicBtn.textContent = playing ? '⏸️ Pause Music' : '🎵 Play Music';
+        musicBtn.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
+      }
+
+      /* Start music on the very first user interaction (click or tap).
+         Skip if the interaction is on the music toggle button — that button's
+         own handler already starts/pauses the track. */
+      let autoplayAttempted = false;
+      function startOnFirstInteraction(e) {
+        if (musicBtn.contains(e.target)) { return; }
+        if (autoplayAttempted) { return; }
+        autoplayAttempted = true;
+        audio.play().then(function () {
+          updateMusicBtn(true);
+          /* Listeners removed on success; flag stays true but is no longer checked */
+          document.removeEventListener('click', startOnFirstInteraction);
+          document.removeEventListener('touchstart', startOnFirstInteraction);
+        }).catch(function () {
+          /* Autoplay was blocked; reset flag so the next interaction can retry */
+          autoplayAttempted = false;
+        });
+      }
+      document.addEventListener('click', startOnFirstInteraction);
+      document.addEventListener('touchstart', startOnFirstInteraction, { passive: true });
+
       musicBtn.addEventListener('click', function () {
         if (audio.paused) {
           audio.play();
-          musicBtn.textContent = '⏸️ Pause Music';
-          musicBtn.setAttribute('aria-label', 'Pause background music');
+          updateMusicBtn(true);
         } else {
           audio.pause();
-          musicBtn.textContent = '🎵 Play Music';
-          musicBtn.setAttribute('aria-label', 'Play background music');
+          updateMusicBtn(false);
         }
       });
     })();
